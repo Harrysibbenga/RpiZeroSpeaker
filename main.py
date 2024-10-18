@@ -16,9 +16,11 @@ def main():
             media_choice = input("Choose media player (vlc or spotify): ").lower()
             if media_choice == "vlc":
                 from media_vlc import initialize_media, load_music, get_current_song_info, play_pause, next_track, previous_track, stop_playback
+                lcd_inst.display_message("You have picked vlc")
                 break
             elif media_choice == "spotify":
                 from media_spotify import initialize_media, get_current_song_info, play_pause, next_track, previous_track, stop_playback
+                lcd_inst.display_message("You have picked spotify")
                 break
             else:
                 print("Invalid choice. Please enter 'vlc' or 'spotify'.")
@@ -26,10 +28,11 @@ def main():
     except KeyboardInterrupt:
         print("Exiting due to KeyboardInterrupt...")
     finally:
-        print("Resetting display")
+        print("Resetting display and ending program")
+        lcd_inst.display_message("Goodbye. See you next time :)")
+        time.sleep(5)
         lcd_inst.disp.fill(0)  # Clear the display
         lcd_inst.disp.show()
-        print("Goodbye !!!!!")
 
 if __name__ == "__main__":
     main()

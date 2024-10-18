@@ -41,6 +41,37 @@ class LCDClass:
             print(f"Error initializing PiOLED: {e}")
             self.disp = None  # Set disp to None on error
 
+    def display_message(self, message):
+        """Displays a given message on the LCD."""
+        if self.disp is None:
+            print("Error: LCD not initialized.")
+            return
+
+        self.draw.rectangle((0, 0, self.image.width, self.image.height), outline=0, fill=0)
+        # Split the message into lines if it's too long
+        lines = self.split_message(message)
+        y = 0
+        for line in lines:
+            self.draw.text((0, y), line, font=self.font, fill=255)
+            y += 16  # Move to the next line
+
+        self.disp.image(self.image)
+        self.disp.show()
+
+    def split_message(self, message):
+        """Splits a long message into multiple lines to fit the LCD."""
+        words = message.split()
+        lines = []
+        current_line = ""
+        for word in words:
+            if len(current_line + word) <= 21:  # 21 characters per line (approx.)
+                current_line += word + " "
+            else:
+                lines.append(current_line.strip())
+                current_line = word + " "
+        lines.append(current_line.strip())  # Add the last line
+        return lines
+
     def display_song_info(self, song_info):
         """Displays song information on the LCD."""
         if self.disp is None:
