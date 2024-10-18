@@ -37,7 +37,7 @@ def main():
                 time.sleep(time_constant)
 
         lcd_inst.display_message("Your device is ready !!")
-        time.sleep(5)
+        time.sleep(time_constant)
 
         controls = Controls(media_player_inst, lcd_inst, time_constant)  # Create a Controls instance
         controls.start()  # Start the keyboard listener
@@ -46,10 +46,7 @@ def main():
             song_info = media_player_inst.get_current_song_info()
             title = song_info['title']
             artist = song_info['artist']
-            duration = song_info['duration']
-            lcd_inst.display_message(f"{artist} - {duration}")
-            time.sleep(time_constant)
-            lcd_inst.display_message(f"{title} - {duration}")
+            lcd_inst.display_message(f"{artist} - {title}")
             time.sleep(time_constant)
 
     except KeyboardInterrupt:

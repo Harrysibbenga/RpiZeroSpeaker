@@ -1,6 +1,5 @@
 import subprocess
 import vlc
-import time
 
 class VLCPlayer:
     def __init__(self, time_constant):
