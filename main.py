@@ -1,13 +1,13 @@
 import time
 from LCD import LCDClass
-from controls import initialize_controls
+#from controls import initialize_controls
 
 def main():
     """Main loop of the music player."""
     # initialize the LCD Class
-    lcd = LCDClass()
+    lcd_inst = LCDClass()
 
-    if lcd.lcd_image is None:  # Check if initialization failed
+    if lcd_inst.lcd_image is None:  # Check if initialization failed
         print("Error initializing LCD. Exiting...")
         return  # Exit the script
 
@@ -24,10 +24,12 @@ def main():
                 print("Invalid choice. Please enter 'vlc' or 'spotify'.")
 
     except KeyboardInterrupt:
-        print("Exiting...")
+        print("Exiting due to KeyboardInterrupt...")
     finally:
-        lcd.disp.fill(0)  # Clear the display
-        lcd.disp.show()
+        print("Resetting display")
+        lcd_inst.disp.fill(0)  # Clear the display
+        lcd_inst.disp.show()
+        print("Goodbye !!!!!")
 
 if __name__ == "__main__":
     main()
