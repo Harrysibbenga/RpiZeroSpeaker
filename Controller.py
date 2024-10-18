@@ -25,11 +25,11 @@ class Controls:
                     self.media_player.previous_track()
                 elif key.char == 'q':  # Quit
                     self.lcd_screen.display_message("Quit pressed Exiting the control listener")
-                    self.media_player.stop_playback()
+                    time.sleep(2)
                     self.running = False
                     self.stop()  # Stop the listener
-                    print("Exiting listener loop ...")
-                    time.sleep(2)
+                    self.media_player.stop_playback()
+                    print("Exited listener loop and stopped playback ...")
 
 
             except AttributeError:
