@@ -6,30 +6,40 @@ import time
 
 def initialize_lcd():
     """Initializes the PiOLED display."""
-    # Create I2C interface
-    i2c = busio.I2C(board.SCL, board.SDA)
-    # Create PiOLED display object
-    disp = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
-    # Clear display
-    disp.fill(0)
-    disp.show()
-    # Create blank image for drawing
-    width = disp.width
-    height = disp.height
-    image = Image.new("1", (width, height))
-    # Get drawing object to draw on image
-    draw = ImageDraw.Draw(image)
-    # Load default font
-    font = ImageFont.load_default()
+    try:
+        print("Initializing I2C...")
+        i2c = busio.I2C(board.SCL, board.SDA)
+        print("Initializing PiOLED...")
+        disp = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
 
-    # Display welcome message
-    draw.text((0, 0), "Welcome!", font=font, fill=255)
-    draw.text((0, 16), "Choose media:", font=font, fill=255)
-    disp.image(image)  # Display the image on the PiOLED
-    disp.show()
-    time.sleep(2)  # Show the message for 2 seconds
+        print("Clearing display...")
+        disp.fill(0)
+        disp.show()
 
-    return image, draw, font, disp
+        print("Creating image...")
+        width = disp.width
+        height = disp.height
+        image = Image.new("1", (width, height))
+
+        print("Getting drawing object...")
+        draw = ImageDraw.Draw(image)
+
+        print("Loading font...")
+        font = ImageFont.load_default()
+
+        print("Displaying welcome message...")
+        draw.text((0, 0), "Welcome!", font=font, fill=255)
+        draw.text((0, 16), "Choose media:", font=font, fill=255)
+        disp.image(image)
+        disp.show()
+        time.sleep(2)
+
+        print("LCD initialized successfully!")
+        return image, draw, font, disp
+
+    except ValueError as e:
+        print(f"Error initializing PiOLED: {e}")
+        return None, None, None, None  # Return None for all objects on error
 
 def display_song_info(image, draw, font, song_info):
     """Displays song information on the LCD (mocked on PC)."""

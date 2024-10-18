@@ -1,12 +1,16 @@
 import time
-from lcd import initialize_lcd, display_song_info
-#from controls import initialize_controls
+from lcd import initialize_lcd
 
 def main():
     """Main loop of the music player."""
     try:
+        """Main loop of the music player."""
         # Get LCD objects
-        lcd_image, lcd_draw, lcd_font, disp = initialize_lcd() 
+        lcd_image, lcd_draw, lcd_font, disp = initialize_lcd()
+        
+        if lcd_image is None:  # Check if initialization failed
+            print("Error initializing LCD. Exiting...")
+            return  # Exit the script
 
         while True:
             media_choice = input("Choose media player (vlc or spotify): ").lower()
@@ -19,16 +23,6 @@ def main():
             else:
                 print("Invalid choice. Please enter 'vlc' or 'spotify'.")
 
-        # media_player = initialize_media()
-        # initialize_controls(media_player)
-
-        # if media_choice == "vlc":
-        #     load_music(media_player, "/home/rpi_speaker/Music")
-
-        # while True:
-        #     song_info = get_current_song_info(media_player)
-        #     display_song_info(lcd_image, lcd_draw, lcd_font, song_info)  # Pass LCD objects
-        #     time.sleep(1)
     except KeyboardInterrupt:
         print("Exiting...")
     finally:
