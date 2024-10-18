@@ -5,7 +5,6 @@ def main():
     """Main loop of the music player."""
     try:
         """Main loop of the music player."""
-        initialize_lcd()
         # Get LCD objects
         lcd_image, lcd_draw, lcd_font, disp = initialize_lcd()
         
@@ -29,3 +28,6 @@ def main():
     finally:
         disp.fill(0)
         disp.show()
+
+if __name__ == "__main__":
+    main()
