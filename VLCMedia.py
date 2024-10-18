@@ -1,11 +1,12 @@
 import subprocess
 import vlc
+import time
 
 class VLCPlayer:
     def __init__(self):
         """Initializes the VLC media player."""
         print("Initializing VLC...")
-        self.instance = vlc.Instance()  # Create a VLC instance
+        self.instance = vlc.Instance('--no-xlib')  # Create a VLC instance
         self.player = self.instance.media_player_new()  # Create a media player
         self.playlist = []
         self.current_song_index = 0
