@@ -19,14 +19,12 @@ def main():
         while True:
             media_choice = input("Choose media player (vlc or spotify): ").lower()
             if media_choice == "vlc":
-                from VLCMedia import initialize_media, load_music, get_current_song_info, play_pause, next_track, previous_track, stop_playback
                 lcd_inst.display_message("You have picked VLC")
                 media_player_inst = VLCPlayer()
                 media_player_inst.load_music("/home/rpi_speaker/Music")
                 time.sleep(5)
                 break
             elif media_choice == "spotify":
-                from SpotifyMedia import initialize_media, get_current_song_info, play_pause, next_track, previous_track, stop_playback
                 lcd_inst.display_message("You have picked SPOTIFY")
                 media_player_inst = SpotifyPlayer()
                 time.sleep(5)
