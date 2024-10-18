@@ -5,10 +5,11 @@ def main():
     """Main loop of the music player."""
     try:
         """Main loop of the music player."""
+        initialize_lcd()
         # Get LCD objects
-        lcd_state = initialize_lcd()
+        lcd_image, lcd_draw, lcd_font, disp = initialize_lcd()
         
-        if lcd_state.lcd_image is None:  # Check if initialization failed
+        if lcd_image is None:  # Check if initialization failed
             print("Error initializing LCD. Exiting...")
             return  # Exit the script
 
@@ -26,5 +27,5 @@ def main():
     except KeyboardInterrupt:
         print("Exiting...")
     finally:
-        lcd_state.disp.fill(0)
-        lcd_state.disp.show()
+        disp.fill(0)
+        disp.show()
