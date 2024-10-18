@@ -7,7 +7,7 @@ class SpotifyPlayer:
         # You'll implement the actual Spotify initialization here later
         pass
 
-    def get_current_song_info(self):
+    def get_current_song_info(self, time_constant):
         """Gets information about the currently playing song using Raspotify."""
         print("Getting song information (Spotify)...")
         # You'll implement the Spotify metadata extraction here later

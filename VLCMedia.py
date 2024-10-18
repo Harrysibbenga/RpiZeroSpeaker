@@ -3,13 +3,14 @@ import vlc
 import time
 
 class VLCPlayer:
-    def __init__(self):
+    def __init__(self, time_constant):
         """Initializes the VLC media player."""
         print("Initializing VLC...")
         self.instance = vlc.Instance('--no-xlib')
         self.player = self.instance.media_player_new()
         self.playlist = []
         self.current_song_index = 0
+        self.time_const = time_constant
 
     def load_music(self, music_dir):
         """Loads music from the given directory."""
