@@ -30,7 +30,7 @@ class LCDClass:
 
             print("Displaying welcome message...")
             self.draw.text((0, 0), "Welcome!", font=self.font, fill=255)
-            self.draw.text((0, 16), "Choose media:", font=self.font, fill=255)
+            self.draw.text((0, 16), "Choose media: vlc or spotify ?", font=self.font, fill=255)
             self.disp.image(self.image)
             self.disp.show()
             time.sleep(2)

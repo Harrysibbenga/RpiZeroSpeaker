@@ -17,10 +17,12 @@ def main():
             if media_choice == "vlc":
                 from media_vlc import initialize_media, load_music, get_current_song_info, play_pause, next_track, previous_track, stop_playback
                 lcd_inst.display_message("You have picked vlc")
+                time.sleep(5)
                 break
             elif media_choice == "spotify":
                 from media_spotify import initialize_media, get_current_song_info, play_pause, next_track, previous_track, stop_playback
                 lcd_inst.display_message("You have picked spotify")
+                time.sleep(5)
                 break
             else:
                 print("Invalid choice. Please enter 'vlc' or 'spotify'.")
