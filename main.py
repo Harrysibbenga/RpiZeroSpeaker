@@ -46,9 +46,9 @@ def main():
             title = song_info['title']
             artist = song_info['artist']
             duration = song_info['duration']
-            lcd_inst.display_song_info(f"{artist} - {duration}")
+            lcd_inst.display_message(f"{artist} - {duration}")
             time.sleep(1.5)
-            lcd_inst.display_song_info(f"{title} - {duration}")
+            lcd_inst.display_message(f"{title} - {duration}")
             time.sleep(1.5)
 
     except KeyboardInterrupt:
