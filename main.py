@@ -7,7 +7,7 @@ def main():
     # initialize the LCD Class
     lcd_inst = LCDClass()
 
-    if lcd_inst.lcd_image is None:  # Check if initialization failed
+    if lcd_inst.image is None:  # Check if initialization failed
         print("Error initializing LCD. Exiting...")
         return  # Exit the script
 
