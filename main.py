@@ -1,6 +1,10 @@
 import time
 from LCD import LCDClass
-#from controls import initialize_controls
+from SpotifyMedia import SpotifyPlayer
+from VLCMedia import VLCPlayer
+
+media_player_inst = {}
+lcd_inst = {}
 
 def main():
     """Main loop of the music player."""
@@ -15,13 +19,16 @@ def main():
         while True:
             media_choice = input("Choose media player (vlc or spotify): ").lower()
             if media_choice == "vlc":
-                from media_vlc import initialize_media, load_music, get_current_song_info, play_pause, next_track, previous_track, stop_playback
+                from VLCMedia import initialize_media, load_music, get_current_song_info, play_pause, next_track, previous_track, stop_playback
                 lcd_inst.display_message("You have picked VLC")
+                media_player_inst = VLCPlayer()
+                media_player_inst.load_music("/home/rpi_speaker/Music")
                 time.sleep(5)
                 break
             elif media_choice == "spotify":
-                from media_spotify import initialize_media, get_current_song_info, play_pause, next_track, previous_track, stop_playback
+                from SpotifyMedia import initialize_media, get_current_song_info, play_pause, next_track, previous_track, stop_playback
                 lcd_inst.display_message("You have picked SPOTIFY")
+                media_player_inst = SpotifyPlayer()
                 time.sleep(5)
                 break
             else:
