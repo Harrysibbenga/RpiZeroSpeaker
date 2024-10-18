@@ -19,6 +19,7 @@ class Controls:
                     self.media_player.previous_track()
                 elif key.char == 'q':  # Quit
                     print("Exiting...")
+                    self.media_player.stop_playback()
                     # Add any cleanup or exit logic here
                     self.stop()  # Stop the listener
 
