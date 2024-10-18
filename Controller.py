@@ -2,12 +2,13 @@ from pynput import keyboard
 import time 
 
 class Controls:
-    def __init__(self, media_player, lcd_screen):
+    def __init__(self, media_player, lcd_screen, time_constant):
         """Initializes the keypress controls."""
         self.media_player = media_player
         self.lcd_screen = lcd_screen
         self.listener = None
         self.running = True
+        self.time_const = time_constant
 
     def start(self):
         """Starts the keyboard listener."""
@@ -25,7 +26,7 @@ class Controls:
                     self.media_player.previous_track()
                 elif key.char == 'q':  # Quit
                     self.lcd_screen.display_message("Quit pressed Exiting the control listener")
-                    time.sleep(2)
+                    time.sleep(self.time_const)
                     self.running = False
                     self.stop()  # Stop the listener
                     self.media_player.stop_playback()

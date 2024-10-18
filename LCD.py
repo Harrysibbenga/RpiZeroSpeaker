@@ -5,7 +5,7 @@ import adafruit_ssd1306
 import time
 
 class LCDClass:
-    def __init__(self):
+    def __init__(self, time_constant):
         """Initializes the PiOLED display."""
         try:
             print("Initializing I2C...")
@@ -16,6 +16,8 @@ class LCDClass:
             print("Clearing display...")
             self.disp.fill(0)
             self.disp.show()
+
+            self.time_const = time_constant
 
             print("Creating image...")
             width = self.disp.width
@@ -33,7 +35,7 @@ class LCDClass:
             self.draw.text((0, 16), "vlc or spotify ?", font=self.font, fill=255)
             self.disp.image(self.image)
             self.disp.show()
-            time.sleep(2)
+            time.sleep(self.time_const)
 
             print("LCD initialized successfully!")
 
