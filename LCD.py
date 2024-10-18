@@ -29,8 +29,8 @@ class LCDClass:
             self.font = ImageFont.load_default()
 
             print("Displaying welcome message...")
-            self.draw.text((0, 0), "Welcome!", font=self.font, fill=255)
-            self.draw.text((0, 16), "Choose media: vlc or spotify ?", font=self.font, fill=255)
+            self.draw.text((0, 0), "Choose your src", font=self.font, fill=255)
+            self.draw.text((0, 16), "vlc or spotify ?", font=self.font, fill=255)
             self.disp.image(self.image)
             self.disp.show()
             time.sleep(2)

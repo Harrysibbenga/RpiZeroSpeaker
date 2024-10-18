@@ -16,12 +16,12 @@ def main():
             media_choice = input("Choose media player (vlc or spotify): ").lower()
             if media_choice == "vlc":
                 from media_vlc import initialize_media, load_music, get_current_song_info, play_pause, next_track, previous_track, stop_playback
-                lcd_inst.display_message("You have picked vlc")
+                lcd_inst.display_message("You have picked VLC")
                 time.sleep(5)
                 break
             elif media_choice == "spotify":
                 from media_spotify import initialize_media, get_current_song_info, play_pause, next_track, previous_track, stop_playback
-                lcd_inst.display_message("You have picked spotify")
+                lcd_inst.display_message("You have picked SPOTIFY")
                 time.sleep(5)
                 break
             else:
@@ -31,7 +31,7 @@ def main():
         print("Exiting due to KeyboardInterrupt...")
     finally:
         print("Resetting display and ending program")
-        lcd_inst.display_message("Goodbye. See you next time :)")
+        lcd_inst.display_message("Goodbye. Untill next time :)")
         time.sleep(5)
         lcd_inst.disp.fill(0)  # Clear the display
         lcd_inst.disp.show()
