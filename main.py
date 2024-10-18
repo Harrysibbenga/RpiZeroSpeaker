@@ -2,6 +2,7 @@ import time
 from LCD import LCDClass
 from SpotifyMedia import SpotifyPlayer
 from VLCMedia import VLCPlayer
+from Controller import Controls
 
 media_player_inst = {}
 lcd_inst = {}
@@ -31,6 +32,9 @@ def main():
                 break
             else:
                 print("Invalid choice. Please enter 'vlc' or 'spotify'.")
+
+            controls = Controls(media_player_inst)  # Create a Controls instance
+            controls.start()
 
     except KeyboardInterrupt:
         print("Exiting due to KeyboardInterrupt...")
