@@ -1,17 +1,17 @@
 import time
-from lcd import initialize_lcd
+from lcd import initialize_lcd, display_song_info
+from controls import initialize_controls
 
 def main():
     """Main loop of the music player."""
-    try:
-        """Main loop of the music player."""
-        # Get LCD objects
-        lcd_image, lcd_draw, lcd_font, disp = initialize_lcd()
-        
-        if lcd_image is None:  # Check if initialization failed
-            print("Error initializing LCD. Exiting...")
-            return  # Exit the script
+    # Get LCD objects
+    lcd_image, lcd_draw, lcd_font, disp = initialize_lcd()
 
+    if lcd_image is None:  # Check if initialization failed
+        print("Error initializing LCD. Exiting...")
+        return  # Exit the script
+
+    try:
         while True:
             media_choice = input("Choose media player (vlc or spotify): ").lower()
             if media_choice == "vlc":
@@ -26,7 +26,7 @@ def main():
     except KeyboardInterrupt:
         print("Exiting...")
     finally:
-        disp.fill(0)
+        disp.fill(0)  # Clear the display
         disp.show()
 
 if __name__ == "__main__":
