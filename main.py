@@ -43,8 +43,13 @@ def main():
 
         while controls.running:  # Main loop
             song_info = media_player_inst.get_current_song_info()
-            lcd_inst.display_song_info(song_info)
-            time.sleep(1)
+            title = song_info['title']
+            artist = song_info['artist']
+            duration = song_info['duration']
+            lcd_inst.display_song_info(f"{artist} - {duration}")
+            time.sleep(1.5)
+            lcd_inst.display_song_info(f"{title} - {duration}")
+            time.sleep(1.5)
 
     except KeyboardInterrupt:
         print("Exiting due to KeyboardInterrupt...")
