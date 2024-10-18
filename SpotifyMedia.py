@@ -1,61 +1,51 @@
-import subprocess
+import requests
 
 class SpotifyPlayer:
     def __init__(self, time_constant):
-        """Initializes the Spotify player (using Raspotify)."""
+        """Initializes the Spotify player and gets the amplifier's IP address."""
+        self.time_constant = time_constant
         print("Initializing Spotify...")
-        try:
-            # Check if Raspotify is installed and running
-            subprocess.run(["systemctl", "status", "raspotify"], check=True)
-            print("Raspotify is running.")
-        except subprocess.CalledProcessError:
-            print("Error: Raspotify is not installed or not running.")
-            print("Please install and start Raspotify.")
-            # You might want to exit or handle the error differently here
+
+        # Get amplifier's IP address from user input (with default)
+        amp_ip = input("Enter the amplifier's IP address (default: 192.168.1.146): ")
+        if not amp_ip:
+            amp_ip = "192.168.1.146"  # Use default if no input
+
+        self.amp_ip = amp_ip
+        self.url = f"http://{self.amp_ip}/httpapi.asp?command=getPlayerStatus"
+        self.current_track_id = None
 
     def get_current_song_info(self):
-        """Gets information about the currently playing song using Raspotify."""
+        """Gets information about the currently playing song from the amplifier."""
         print("Getting song information (Spotify)...")
         try:
-            # Use playerctl to get song information
-            process = subprocess.run(["playerctl", "metadata", "-p", "raspotify", 
-                                      "title", "artist", "duration"], capture_output=True, text=True)
-            output = process.stdout.splitlines()
+            response = requests.get(self.url)
+            response.raise_for_status()
+            data = response.json()
 
-            if len(output) == 3:
-                title, artist, duration = output
-                return {
-                    "title": title,
-                    "artist": artist,
-                    "duration": duration
-                }
+            # Check if a track is playing and if it's a new track
+            track_id = data["Title"]["Artist"]["totlen"]
+
+            if data['status'] == 'play':
+                if track_id != self.current_track_id:
+                    self.current_track_id = track_id
+                    return {
+                        "title": data["Title"],
+                        "artist": data["Artist"],
+                    }
+                else:
+                    # Track hasn't changed, return None to avoid unnecessary updates
+                    return None
             else:
-                print("Error: Could not get song information from playerctl.")
-                return {"title": "Unknown", "artist": "Unknown", "duration": "Unknown"}
+                print("No track playing.")
+                return {"title": "No track playing", "artist": ""}
 
-        except FileNotFoundError:
-            print("Error: playerctl not found. Please install playerctl.")
-            return {"title": "Unknown", "artist": "Unknown", "duration": "Unknown"}
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-            return {"title": "Unknown", "artist": "Unknown", "duration": "Unknown"}
+        except requests.exceptions.RequestException as e:
+            print(f"Error: {e}")
+            return {"title": "Error", "artist": "Error", "duration": "Error"}
 
-    def play_pause(self):
-        """Plays or pauses Spotify playback."""
-        print("Play/Pause (Spotify)")
-        subprocess.run(["playerctl", "play-pause", "-p", "raspotify"])
-
-    def next_track(self):
-        """Skips to the next track."""
-        print("Next Track (Spotify)")
-        subprocess.run(["playerctl", "next", "-p", "raspotify"])
-
-    def previous_track(self):
-        """Skips to the previous track."""
-        print("Previous Track (Spotify)")
-        subprocess.run(["playerctl", "previous", "-p", "raspotify"])
-
-    def stop_playback(self):
-        """Stops Spotify playback."""
-        print("Stop Playback (Spotify)")
-        subprocess.run(["playerctl", "stop", "-p", "raspotify"])
+    def format_time(self, seconds):
+        """Formats seconds to mm:ss format."""
+        minutes = int(seconds // 60)
+        seconds = int(seconds % 60)
+        return f"{minutes:02d}:{seconds:02d}"
