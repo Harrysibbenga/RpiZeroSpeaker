@@ -1,11 +1,12 @@
 from pynput import keyboard
-
+import time
 class Controls:
-    def __init__(self, media_player, lcd_screen):
+    def __init__(self, media_player, lcd_inst):
         """Initializes the keypress controls."""
         self.media_player = media_player
-        self.lcd_screen = lcd_screen
+        self.lcd_inst = lcd_inst  # Store the LCD instance
         self.listener = None
+        self.running = True  # Flag to indicate if the listener is running
 
     def start(self):
         """Starts the keyboard listener."""
@@ -13,19 +14,15 @@ class Controls:
         def on_press(key):
             try:
                 if key.char == 's':  # Play/Pause
-                    self.lcd_screen.display_message("Play/Pause pressed")
                     self.media_player.play_pause()
                 elif key.char == 'n':  # Next
-                    self.lcd_screen.display_message("Next pressed")
                     self.media_player.next_track()
                 elif key.char == 'p':  # Previous
-                    self.lcd_screen.display_message("Previous pressed")
                     self.media_player.previous_track()
                 elif key.char == 'q':  # Quit
-                    self.lcd_screen.display_message("Quit pressed")
-                    print("Exiting...")
-                    self.media_player.stop_playback()
-                    # Add any cleanup or exit logic here
+                    self.lcd_inst.display_message("Exiting the Control listener ....")  # Display on LCD
+                    time.sleep(2)
+                    self.running = False  # Set the flag to False
                     self.stop()  # Stop the listener
 
             except AttributeError:
@@ -33,6 +30,7 @@ class Controls:
 
         self.listener = keyboard.Listener(on_press=on_press)
         self.listener.start()
+        self.running = True  # Set the flag to True
 
     def stop(self):
         """Stops the keyboard listener."""

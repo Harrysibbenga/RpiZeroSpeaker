@@ -41,7 +41,7 @@ def main():
         controls = Controls(media_player_inst, lcd_inst)  # Create a Controls instance
         controls.start()  # Start the keyboard listener
 
-        while True:  # Main loop
+        while controls.running:  # Main loop
             song_info = media_player_inst.get_current_song_info()
             lcd_inst.display_song_info(song_info)
             time.sleep(1)
