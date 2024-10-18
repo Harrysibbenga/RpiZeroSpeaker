@@ -1,6 +1,6 @@
 import time
 from lcd import initialize_lcd, display_song_info
-from controls import initialize_controls
+#from controls import initialize_controls
 
 def main():
     """Main loop of the music player."""
