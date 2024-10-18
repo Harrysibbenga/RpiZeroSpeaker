@@ -1,12 +1,13 @@
 from pynput import keyboard
-import time
+import time 
+
 class Controls:
-    def __init__(self, media_player, lcd_inst):
+    def __init__(self, media_player, lcd_screen):
         """Initializes the keypress controls."""
         self.media_player = media_player
-        self.lcd_inst = lcd_inst  # Store the LCD instance
+        self.lcd_screen = lcd_screen
         self.listener = None
-        self.running = True  # Flag to indicate if the listener is running
+        self.running = True
 
     def start(self):
         """Starts the keyboard listener."""
@@ -14,23 +15,29 @@ class Controls:
         def on_press(key):
             try:
                 if key.char == 's':  # Play/Pause
+                    self.lcd_screen.display_message("Play/Pause pressed")
                     self.media_player.play_pause()
                 elif key.char == 'n':  # Next
+                    self.lcd_screen.display_message("Next pressed")
                     self.media_player.next_track()
                 elif key.char == 'p':  # Previous
+                    self.lcd_screen.display_message("Previous pressed")
                     self.media_player.previous_track()
                 elif key.char == 'q':  # Quit
-                    self.lcd_inst.display_message("Exiting the Control listener ....")  # Display on LCD
-                    time.sleep(2)
-                    self.running = False  # Set the flag to False
+                    self.lcd_screen.display_message("Quit pressed Exiting the control listener")
+                    self.media_player.stop_playback()
+                    self.running = False
                     self.stop()  # Stop the listener
+                    print("Exiting listener loop ...")
+                    time.sleep(2)
+
 
             except AttributeError:
                 pass  # Ignore special keys like Shift, Ctrl, etc.
 
         self.listener = keyboard.Listener(on_press=on_press)
         self.listener.start()
-        self.running = True  # Set the flag to True
+        self.running = True
 
     def stop(self):
         """Stops the keyboard listener."""
