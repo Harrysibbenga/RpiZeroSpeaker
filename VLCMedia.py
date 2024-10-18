@@ -9,8 +9,23 @@ class VLCPlayer:
     def load_music(self, music_dir):
         """Loads music from the given directory."""
         print(f"Loading music from {music_dir}...")
-        # You'll implement the actual VLC loading logic here later
-        pass
+        try:
+            # Get a list of supported audio files in the directory
+            process = subprocess.run(['find', music_dir, '-type', 'f', '-name', '*.mp3', '-o', '-name', '*.wav', '-o', '-name', '*.flac'], 
+                                   capture_output=True, text=True)
+            files = process.stdout.splitlines()
+
+            if files:
+                self.playlist = files  # Store the files in the playlist
+                for file in files:
+                    print(file)  # Print each file path
+            else:
+                print("No supported audio files found in the directory.")
+
+        except FileNotFoundError:
+            print("Error: Music directory not found.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
 
     def get_current_song_info(self):
         """Gets information about the currently playing song."""
